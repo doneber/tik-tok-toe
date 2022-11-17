@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 en raya en 1 min</title>
+    <link rel="stylesheet" href="./style.css">
+<style>
+p {
+    text-align: center;
+    font-size: 2rem;
+}
+.table button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.table {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: fit-content;
+    margin: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+</head>
+
+<body>
+<p id="winner">Ganador: ?</p>
+<div class="table">
+    <button></button>
+    <button></button>
+    <button></button>
+    <button></button>
+    <button></button>
+    <button></button>
+    <button></button>
+    <button></button>
+    <button></button>
+</div>
+
+<script>
+let turn = true
+const moveArray = new Array(9).fill(null)
+function win(i,j,k) {
+    if (moveArray[i] == moveArray[j]
+     && moveArray[j] == moveArray[k]
+     && moveArray[k] != null) {
+        return true
+    }
+    return false
+}
+const btnList = document.querySelectorAll('.table button')
+btnList.forEach((btn, index) => {
+    btn.addEventListener('click', event=>{
+        event.target.textContent = turn?'X':'O'
+        moveArray[index] = turn
+        if (win(0, 1, 2) ||
+        win(3, 4, 5) ||
+            win(6, 7, 8) ||
+            win(0, 3, 6) ||
+            win(1, 4, 7) ||
+            win(2, 5, 8) ||
+            win(0, 4, 8) ||
+            win(2, 4, 6)) {
+            document.querySelector('#winner')
+            .textContent = `Ganador: ${turn?'X':'O'}`
+        }
+        turn = !turn
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
