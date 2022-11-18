@@ -24,32 +24,6 @@ p {
     width: fit-content;
     margin: auto;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </style>
 </head>
 
@@ -78,24 +52,26 @@ function win(i,j,k) {
     }
     return false
 }
-const btnList = document.querySelectorAll('.table button')
-btnList.forEach((btn, index) => {
-    btn.addEventListener('click', event=>{
-        event.target.textContent = turn?'X':'O'
-        moveArray[index] = turn
-        if (win(0, 1, 2) ||
-        win(3, 4, 5) ||
-            win(6, 7, 8) ||
-            win(0, 3, 6) ||
-            win(1, 4, 7) ||
-            win(2, 5, 8) ||
-            win(0, 4, 8) ||
-            win(2, 4, 6)) {
-            document.querySelector('#winner')
-            .textContent = `Ganador: ${turn?'X':'O'}`
-        }
-        turn = !turn
-    })
+const table = document.querySelector('.table')
+const buttons = [...table.children]
+table.addEventListener('click', event=>{
+    const btn = event.target
+    const index = buttons.indexOf(btn)
+    if (index < 0) return
+    btn.textContent = turn?'X':'O'
+    moveArray[index] = turn
+    if (win(0, 1, 2) ||
+    win(3, 4, 5) ||
+        win(6, 7, 8) ||
+        win(0, 3, 6) ||
+        win(1, 4, 7) ||
+        win(2, 5, 8) ||
+        win(0, 4, 8) ||
+        win(2, 4, 6)) {
+        document.querySelector('#winner')
+        .textContent = `Ganador: ${turn?'X':'O'}`
+    }
+    turn = !turn
 })
 
 
@@ -123,7 +99,7 @@ btnList.forEach((btn, index) => {
 
 
 
-</script>
+    </script>
 
 
 
