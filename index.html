@@ -43,34 +43,18 @@ p {
 
 <script>
 let turn = true
-const moveArray = new Array(9).fill(null)
-function win(i,j,k) {
-    if (moveArray[i] == moveArray[j]
-     && moveArray[j] == moveArray[k]
-     && moveArray[k] != null) {
-        return true
-    }
-    return false
-}
+const setX = new Set()
+const setO = new Set()
+const winConditions = [[0, 1, 2],[3, 4, 5],[6, 7, 8],[0, 3, 6],[1, 4, 7],[2, 5, 8],[0, 4, 8],[2, 4, 6]]
 const table = document.querySelector('.table')
 const buttons = [...table.children]
 table.addEventListener('click', event=>{
-    const btn = event.target
-    const index = buttons.indexOf(btn)
-    if (index < 0) return
-    btn.textContent = turn?'X':'O'
-    moveArray[index] = turn
-    if (win(0, 1, 2) ||
-    win(3, 4, 5) ||
-        win(6, 7, 8) ||
-        win(0, 3, 6) ||
-        win(1, 4, 7) ||
-        win(2, 5, 8) ||
-        win(0, 4, 8) ||
-        win(2, 4, 6)) {
-        document.querySelector('#winner')
-        .textContent = `Ganador: ${turn?'X':'O'}`
-    }
+    if (buttons.indexOf(event.target) < 0) return
+    event.target.textContent = turn?'X':'O'
+    const setAux = turn? setX: setO
+    setAux.add(buttons.indexOf(event.target))
+    const won = winConditions.some(winCond => winCond.every(i => setAux.has(i)))
+    if (won) document.querySelector('#winner').textContent = `Ganador: ${turn?'X':'O'}`
     turn = !turn
 })
 
@@ -100,28 +84,5 @@ table.addEventListener('click', event=>{
 
 
     </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
-
 </html>
