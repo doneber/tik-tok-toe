@@ -49,39 +49,30 @@ const winConditions = [[0, 1, 2],[3, 4, 5],[6, 7, 8],[0, 3, 6],[1, 4, 7],[2, 5, 
 const table = document.querySelector('.table')
 const buttons = [...table.children]
 table.addEventListener('click', event=>{
-    if (buttons.indexOf(event.target) < 0) return
-    event.target.textContent = turn?'X':'O'
+    const btn = event.target
+    const index = buttons.indexOf(btn)
+    if (index < 0) return
+    updateGame(index, btn)
+    playPc()
+})
+
+function updateGame(index, btnNode) {
+    btnNode.textContent = turn?'X':'O'
     const setAux = turn? setX: setO
-    setAux.add(buttons.indexOf(event.target))
+    setAux.add(index)
     const won = winConditions.some(winCond => winCond.every(i => setAux.has(i)))
     if (won) document.querySelector('#winner').textContent = `Ganador: ${turn?'X':'O'}`
     turn = !turn
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
+function playPc() {
+    if ((setX.size + setO.size) == 9) return
+    setTimeout(() => {
+        let indexRandom = parseInt(Math.random()*9)
+        while(setX.has(indexRandom) || setO.has(indexRandom))
+            indexRandom = parseInt(Math.random()*9)
+        updateGame(indexRandom, buttons[indexRandom])
+    }, 400);
+}
 
     </script>
 </body>
